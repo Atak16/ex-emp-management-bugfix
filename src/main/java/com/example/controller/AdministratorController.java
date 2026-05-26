@@ -105,7 +105,7 @@ public class AdministratorController {
 	@PostMapping("/login")
 	public String login(@Validated LoginForm form, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
 		if(result.hasErrors()) {
-			return "login";
+			return "administrator/login";
 		}
 		
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
