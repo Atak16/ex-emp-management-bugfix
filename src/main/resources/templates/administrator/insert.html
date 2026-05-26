@@ -128,7 +128,8 @@
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
-                      <button type="submit" class="btn btn-primary">
+                      <!--ボタン連打防止記述-->
+                      <button type="submit" class="btn btn-primary" onclick="setTimeout(() => this.disabled = true, 1);">
                         登録
                       </button>
                     </div>
