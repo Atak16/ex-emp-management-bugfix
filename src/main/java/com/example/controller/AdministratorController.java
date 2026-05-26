@@ -75,7 +75,7 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@PostMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+	public String insert(@Validated InsertAdministratorForm form, BindingResult result) {
 		if(result.hasErrors()) {
 			return "administrator/insert";
 		}
@@ -106,7 +106,7 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@PostMapping("/login")
-	public String login(@Validated LoginForm form, BindingResult result, RedirectAttributes redirectAttributes, Model model) {
+	public String login(@Validated LoginForm form, BindingResult result, RedirectAttributes redirectAttributes) {
 		if(result.hasErrors()) {
 			return "administrator/login";
 		}
