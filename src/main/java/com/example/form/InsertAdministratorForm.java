@@ -1,5 +1,10 @@
 package com.example.form;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 /**
  * 管理者情報登録時に使用するフォーム.
  * 
@@ -8,10 +13,23 @@ package com.example.form;
  */
 public class InsertAdministratorForm {
 	/** 名前 */
+	@NotBlank(message="名前を入力してください。")
+	@Size(min=1, max=20, message="20文字以内で入力してください。")
+	@Pattern(regexp = "^[^\\s　]+$", message="スペースを含めることはできません。")
 	private String name;
 	/** メールアドレス */
+	@Email(message="メールアドレスの形式が無効です。")
+	@NotBlank(message="メールアドレスを入力してください。")
+	@Size(min=1, max=256, message="256文字以内で入力してください。")
+	@Pattern(regexp = "^[ -~]+$", message="全角文字は入力できません。半角文字で入力してください。")
+	@Pattern(regexp = "^[^\\s　]+$", message = "スペースを含めることはできません。")
 	private String mailAddress;
 	/** パスワード */
+	@NotBlank(message="パスワードを入力してください。")
+	@Size(min=8, max=20, message="8文字以上20文字以内で入力してください。")
+	@Pattern(regexp = "^[ -~]+$", message="全角文字は入力できません。半角文字で入力してください。")
+	@Pattern(regexp = "^[^\\s　]+$", message = "スペースを含めることはできません。")
+	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).+$", message="大文字、小文字をそれぞれ1文字以上含める必要があります。")
 	private String password;
 
 	public String getName() {

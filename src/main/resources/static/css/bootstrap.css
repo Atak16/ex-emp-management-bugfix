@@ -6329,4 +6329,8 @@ button.close {
     display: none !important;
   }
 }
+
+.errorMessage {
+  color: red;
+}
 /*# sourceMappingURL=bootstrap.css.map */
