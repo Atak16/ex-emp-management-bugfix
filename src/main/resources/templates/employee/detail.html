@@ -168,7 +168,7 @@
                   <tr>
                     <th nowrap>給料</th>
                     <td>
-                      <span th:text="${#numbers.formatInteger(employee.salary, 3, 'COMMA') + '円'}">400,000円</span>
+                      <span th:text="${employee.salary != null ? #numbers.formatInteger(employee.salary, 3, 'COMMA') + '円' : ''}">400,000円</span>
                     </td>
                   </tr>
                   <tr>
