@@ -52,6 +52,10 @@ public class EmployeeRepository {
 	public List<Employee> findAll(String sort, String direction) {
 		String orderBy;
 
+		if (sort == null) {
+			sort = "hireDate";
+		}
+
 		switch (sort) {
 			case "hireDate":
 			default:
@@ -63,15 +67,15 @@ public class EmployeeRepository {
 		}
 
 		String order;
-		//direction は、昇順にするか降順にするかを指定
+		// direction は、昇順にするか降順にするかを指定
 		if ("asc".equals(direction)) {
 			order = "ASC";
 		} else {
 			order = "DESC";
 		}
 		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count "
-		+ "FROM employees "
-		+ "ORDER BY " + orderBy + " " + order + ", id ASC";
+				+ "FROM employees "
+				+ "ORDER BY " + orderBy + " " + order + ", id ASC";
 
 		List<Employee> developmentList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 

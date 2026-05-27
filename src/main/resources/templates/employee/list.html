@@ -102,16 +102,16 @@
             <thead>
               <tr>
                 <th>従業員名</th>
-                <th>
+                                <th>
                   入社日
                   <a
-                    class="btn btn-xs btn-default"
+                    th:class="|btn btn-xs ${sort == 'hireDate' && direction == 'asc' ? 'btn-primary' : 'btn-default'}|"
                     th:href="@{/employee/showList(sort='hireDate', direction='asc')}"
                   >
                     ▲
                   </a>
                   <a
-                    class="btn btn-xs btn-default"
+                    th:class="|btn btn-xs ${sort == 'hireDate' && direction == 'desc' ? 'btn-primary' : 'btn-default'}|"
                     th:href="@{/employee/showList(sort='hireDate', direction='desc')}"
                   >
                     ▼
@@ -120,13 +120,13 @@
                 <th>
                   扶養人数
                   <a
-                    class="btn btn-xs btn-default"
+                    th:class="|btn btn-xs ${sort == 'dependentsCount' && direction == 'asc' ? 'btn-primary' : 'btn-default'}|"
                     th:href="@{/employee/showList(sort='dependentsCount', direction='asc')}"
                   >
                     ▲
                   </a>
                   <a
-                    class="btn btn-xs btn-default"
+                    th:class="|btn btn-xs ${sort == 'dependentsCount' && direction == 'desc' ? 'btn-primary' : 'btn-default'}|"
                     th:href="@{/employee/showList(sort='dependentsCount', direction='desc')}"
                   >
                     ▼
