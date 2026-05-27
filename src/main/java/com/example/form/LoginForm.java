@@ -1,5 +1,8 @@
 package com.example.form;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+
 /**
  * ログイン時に使用するフォーム.
  * 
@@ -9,8 +12,12 @@ package com.example.form;
 public class LoginForm {
 
 	/** メールアドレス */
+	@NotBlank(message="メールアドレスを入力してください。")
+	@Pattern(regexp = "^(?=.{1,256}$)[a-zA-Z0-9._\\-]+@[a-zA-Z0-9._\\-]+$", message="メールアドレスの形式で入力してください。")
 	private String mailAddress;
 	/** パスワード */
+	@NotBlank(message="パスワードを入力してください。")
+	@Pattern(regexp = "^(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!?@_.\\-]+$", message="パスワードの形式で入力してください。")
 	private String password;
 
 	public String getMailAddress() {
