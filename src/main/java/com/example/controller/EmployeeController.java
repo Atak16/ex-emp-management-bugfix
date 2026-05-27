@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.domain.Employee;
 import com.example.form.UpdateEmployeeForm;
@@ -49,9 +50,14 @@ public class EmployeeController {
 	 * @return 従業員一覧画面
 	 */
 	@GetMapping("/showList")
-	public String showList(Model model) {
-		List<Employee> employeeList = employeeService.showList();
+	public String showList(
+		@RequestParam(name = "sort", defaultValue = "hireDate") String sort,
+		@RequestParam(name = "direction", defaultValue = "desc") String direction,
+		Model model) {
+		List<Employee> employeeList = employeeService.showList(sort, direction);
 		model.addAttribute("employeeList", employeeList);
+		model.addAttribute("sort", sort);
+		model.addAttribute("direction", direction);
 		return "employee/list";
 	}
 
