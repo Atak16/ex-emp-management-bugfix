@@ -74,15 +74,13 @@ public class AdministratorController {
 	 */
 	@PostMapping("/insert")
 	public String insert(InsertAdministratorForm form,Model model) {
+		if (administratorService.isDuplication(form.getMailAddress())) {
+			model.addAttribute("errorMessage", "既に登録されているメールアドレスです");
+			return "administrator/insert";
+		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
-		// 
-		boolean isDuplication = administratorService.isDuplication(administrator.getMailAddress());
-		if(isDuplication){
-			model.addAttribute("errorMessage","既に登録されているメールアドレスです");
-			return "administrator/insert";
-		}
 		administratorService.insert(administrator);
 		
 		return "redirect:/";
