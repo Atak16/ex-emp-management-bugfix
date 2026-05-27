@@ -21,17 +21,15 @@ public class InsertAdministratorForm {
 	@Email(message="メールアドレスの形式が無効です。")
 	@NotBlank(message="メールアドレスを入力してください。")
 	@Size(min=1, max=256, message="256文字以内で入力してください。")
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", message="全角文字は入力できません。半角文字で入力してください。")
+	@Pattern(regexp = "^[a-zA-Z0-9@_.-]+$", message="半角文字で入力してください。使用できる記号は「!」「?」「@」「_」「.」「-」です。")
 	@Pattern(regexp = "^[^\\s　]+$", message = "スペースを含めることはできません。")
-	@Pattern(regexp = "^[@_.-]+$", message = "使用できる記号は「@」「_」「.」「-」です。")
 	private String mailAddress;
 	/** パスワード */
 	@NotBlank(message="パスワードを入力してください。")
 	@Size(min=8, max=20, message="8文字以上20文字以内で入力してください。")
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", message="全角文字は入力できません。半角文字で入力してください。")
+	@Pattern(regexp = "^[a-zA-Z0-9!?@_.-]+$", message="半角文字で入力してください。使用できる記号は「!」「?」「@」「_」「.」「-」です。")
 	@Pattern(regexp = "^[^\\s　]+$", message = "スペースを含めることはできません。")
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).+$", message="大文字、小文字をそれぞれ1文字以上含める必要があります。")
-	@Pattern(regexp = "^[!?@_.-]+$", message = "使用できる記号は「!」「?」「@」「_」「.」「-」です。")
 	private String password;
 
 	public String getName() {

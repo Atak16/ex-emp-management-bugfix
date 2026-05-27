@@ -1,9 +1,7 @@
 package com.example.form;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 
 /**
  * ログイン時に使用するフォーム.
@@ -14,20 +12,12 @@ import jakarta.validation.constraints.Size;
 public class LoginForm {
 
 	/** メールアドレス */
-	@Email(message="メールアドレスの形式が無効です。")
 	@NotBlank(message="メールアドレスを入力してください。")
-	@Size(min=1, max=256, message="256文字以内で入力してください。")
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", message="全角文字は入力できません。半角文字で入力してください。")
-	@Pattern(regexp = "^[^\\s　]+$", message = "スペースを含めることはできません。")
-	@Pattern(regexp = "^[@_.-]+$", message = "使用できる記号は「@」「_」「.」「-」です。")
+	@Pattern(regexp = "^(?=.{1,256}$)[a-zA-Z0-9._\\-]+@[a-zA-Z0-9._\\-]+$", message="メールアドレスの形式で入力してください。")
 	private String mailAddress;
 	/** パスワード */
 	@NotBlank(message="パスワードを入力してください。")
-	@Size(min=8, max=20, message="8文字以上20文字以内で入力してください。")
-	@Pattern(regexp = "^[a-zA-Z0-9]+$", message="全角文字は入力できません。半角文字で入力してください。")
-	@Pattern(regexp = "^[^\\s　]+$", message = "スペースを含めることはできません。")
-	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z]).+$", message="大文字、小文字をそれぞれ1文字以上含める必要があります。")
-	@Pattern(regexp = "^[!?@_.-]+$", message = "使用できる記号は「!」「?」「@」「_」「.」「-」です。")
+	@Pattern(regexp = "^(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9!?@_.\\-]+$", message="パスワードの形式で入力してください。")
 	private String password;
 
 	public String getMailAddress() {
