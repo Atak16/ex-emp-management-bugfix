@@ -3,6 +3,7 @@ package com.example.controller;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,12 +73,18 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@PostMapping("/insert")
-	public String insert(InsertAdministratorForm form) {
+	public String insert(InsertAdministratorForm form,Model model) {
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
+		// 
+		boolean isDuplication = administratorService.isDuplication(administrator.getMailAddress());
+		if(isDuplication){
+			model.addAttribute("errorMessage","既に登録されているメールアドレスです");
+			return "administrator/insert";
+		}
 		administratorService.insert(administrator);
-		//return "employee/list";　(←redirectしていないため修正) 
+		
 		return "redirect:/";
 	}
 
