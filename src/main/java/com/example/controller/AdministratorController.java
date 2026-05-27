@@ -129,4 +129,11 @@ public class AdministratorController {
 		return "redirect:/";
 	}
 
+
+	@GetMapping("/trigger-error")
+    public String trigger500Error() {
+        // 意図的に例外をスローし、500エラーを発生させる
+        throw new RuntimeException("意図的に発生させたサーバーエラー（500）です。");
+    }
+
 }
