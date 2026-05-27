@@ -84,7 +84,9 @@
 
       <!-- パンくずリスト -->
       <ol class="breadcrumb">
-        <li>従業員リスト</li>
+        <li>
+          <a href="list.html" th:href="@{/employee/showList}">従業員リスト</a>
+        </li>
         <li class="active">従業員詳細</li>
       </ol>
 
@@ -168,7 +170,7 @@
                   <tr>
                     <th nowrap>給料</th>
                     <td>
-                      <span th:utext="${employee.salary + '円'}">400000円</span>
+                      <span th:text="${employee.salary != null ? #numbers.formatInteger(employee.salary, 3, 'COMMA') + '円' : ''}">400,000円</span>
                     </td>
                   </tr>
                   <tr>
@@ -210,6 +212,7 @@
                     </td>
                   </tr>
                 </table>
+                <!--ボタン連打防止記述-->
                 <button type="submit" class="btn btn-primary">更新</button>
               </fieldset>
             </form>
