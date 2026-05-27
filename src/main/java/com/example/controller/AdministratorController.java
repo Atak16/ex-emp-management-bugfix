@@ -114,7 +114,6 @@ public class AdministratorController {
 		if(result.hasErrors()) {
 			return "administrator/login";
 		}
-		
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 		if (administrator == null) {
 			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
