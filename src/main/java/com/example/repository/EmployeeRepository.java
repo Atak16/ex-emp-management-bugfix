@@ -83,4 +83,16 @@ public class EmployeeRepository {
 		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
 		template.update(updateSql, param);
 	}
+
+	/**
+	 * 従業員情報を削除します.
+	 */
+	public void delete(Integer id) {
+		String deleteSql = "DELETE FROM employees WHERE id=:id";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
+
+		template.update(deleteSql, param);
+	}
+
 }
