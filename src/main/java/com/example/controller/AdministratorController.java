@@ -4,8 +4,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -75,10 +73,7 @@ public class AdministratorController {
 	 * @return ログイン画面へリダイレクト
 	 */
 	@PostMapping("/insert")
-	public String insert(@Validated InsertAdministratorForm form, BindingResult result, Model model) {
-		if(result.hasErrors()) {
-			return "administrator/insert";
-		}
+	public String insert(InsertAdministratorForm form,Model model) {
 		if (administratorService.isDuplication(form.getMailAddress())) {
 			model.addAttribute("errorMessage", "既に登録されているメールアドレスです");
 			return "administrator/insert";
@@ -87,6 +82,7 @@ public class AdministratorController {
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(form, administrator);
 		administratorService.insert(administrator);
+		
 		return "redirect:/";
 	}
 
@@ -110,17 +106,12 @@ public class AdministratorController {
 	 * @return ログイン後の従業員一覧画面
 	 */
 	@PostMapping("/login")
-	public String login(@Validated LoginForm form, BindingResult result, RedirectAttributes redirectAttributes) {
-		if(result.hasErrors()) {
-			return "administrator/login";
-		}
-		
+	public String login(LoginForm form, RedirectAttributes redirectAttributes) {
 		Administrator administrator = administratorService.login(form.getMailAddress(), form.getPassword());
 		if (administrator == null) {
 			redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			return "redirect:/";
 		}
-
 		return "redirect:/employee/showList";
 	}
 
