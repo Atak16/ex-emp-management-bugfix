@@ -30,6 +30,19 @@ public class AdministratorService {
 	}
 
 	/**
+	 * メールアドレスの重複チェック
+	 * @param mailAddress　入力されたメールアドレス
+	 * @return　既存のメールアドレスかどうか（true:既存/false:新規）
+	 */
+	public boolean isDuplication(String mailAddress){
+		Administrator administratorMailAddress = administratorRepository.findByMailAddress(mailAddress);
+		if(administratorMailAddress != null){
+			return true;
+		}
+		return false;
+	}
+
+	/**
 	 * ログインをします.
 	 * 
 	 * @param mailAddress メールアドレス
