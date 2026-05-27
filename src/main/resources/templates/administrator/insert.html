@@ -87,6 +87,9 @@
                       >
                         メールアドレスを入力してください
                       </label>
+                      <div th:if="${errorMessage}">
+                        <span th:text="${errorMessage}" style="color: red;"></span>
+                      </div>
                       <input
                         type="text"
                         name="mailAddress"
