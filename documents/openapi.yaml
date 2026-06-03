@@ -1,0 +1,226 @@
+openapi: 3.0.3
+# APIの基本情報
+info:
+  title: Administrator Management API
+  version: 1.0.0
+  description: このAPIは管理者情報の管理を目的としています。
+# APIのサーバー情報
+servers:
+  - url: https://api.example.com
+    description: 本番環境
+  - url: https://staging.example.com
+    description: ステージング環境
+  - url: http://localhost:8080
+    description: 開発環境
+
+# APIのエンドポイント一覧
+paths:
+  /administrators:
+    get:
+      summary: 管理者一覧を取得
+      description: 登録された全管理者を取得します
+      responses:
+        "200":
+          description: 取得成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdministratorList"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      summary: 管理者を新規登録
+      security:
+        - basicAuth: []
+      description: 新しいを管理者を登録します
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdministratorRequest"
+      responses:
+        "201":
+          description: 登録成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Administrator"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /administrators/{administratorId}:
+    get:
+      summary: 特定管理者を取得
+      description: 指定IDの管理者を取得します
+      parameters:
+        - name: administratorId
+          in: path
+          required: true
+          description: 管理者ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 取得成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Administrator"
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: 該当ユーザー無し
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: 特定管理者を更新
+      description: 指定IDの管理者を更新します
+      security:
+        - basicAuth: []
+      parameters:
+        - name: id 
+          in: path
+          required: true
+          description: 管理者ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AdministratorRequest"
+      responses:
+        "200":
+          description: 更新成功
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Administrator"
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: 該当ユーザー無し
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: 特定管理者を削除
+      description: 指定IDの管理者を削除します
+      parameters:
+        - name: administratorId
+          in: path
+          required: true
+          description: 管理者ID
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: 削除成功
+        "400":
+          description: 不正なリクエスト
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "404":
+          description: 該当ユーザー無し
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+components:
+  # 認証方式の定義
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+  schemas:
+  # Administratorのデータ定義
+    Administrator:
+      type: object
+      properties:
+        administratorId:
+          type: integer
+          description: 管理者ID
+        name:
+          type: string
+          description: 管理者名
+        mailAddress:
+          type: string
+          description: 管理者メールアドレス
+        password:
+          type: string
+          description: 管理者パスワード
+
+    # Administratorを格納するリスト
+    AdministratorList:
+      type: array
+      items:
+        $ref: "#/components/schemas/Administrator"
+
+    # POST、PUTのリクエストに使うリクエストボディのモデル
+    AdministratorRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: 管理者名
+        mailAddress:
+          type: string
+          description: 管理者メールアドレス
+        password:
+          type: string
+          description: 管理者パスワード
+      required:
+        - name
+        - mailAddress
+        - password
+
+    # エラーレスポンスのモデル
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: ステータスコード
+        message:
+          type: string
+          description: エラーの詳細

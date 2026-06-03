@@ -49,8 +49,33 @@ public class EmployeeRepository {
 	 * 
 	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
 	 */
-	public List<Employee> findAll() {
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date DESC, id ASC";
+	public List<Employee> findAll(String sort, String direction) {
+		String orderBy;
+
+		if (sort == null) {
+			sort = "hireDate";
+		}
+
+		switch (sort) {
+			case "hireDate":
+			default:
+				orderBy = "hire_date";
+				break;
+			case "dependentsCount":
+				orderBy = "dependents_count";
+				break;
+		}
+
+		String order;
+		// direction は、昇順にするか降順にするかを指定
+		if ("asc".equals(direction)) {
+			order = "ASC";
+		} else {
+			order = "DESC";
+		}
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count "
+				+ "FROM employees "
+				+ "ORDER BY " + orderBy + " " + order + ", id ASC";
 
 		List<Employee> developmentList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 
