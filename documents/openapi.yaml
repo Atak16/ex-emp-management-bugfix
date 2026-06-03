@@ -98,7 +98,7 @@ paths:
       security:
         - basicAuth: []
       parameters:
-        - name: administratorId 
+        - name: id 
           in: path
           required: true
           description: 管理者ID
