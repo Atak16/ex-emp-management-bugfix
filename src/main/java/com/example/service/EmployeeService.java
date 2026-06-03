@@ -27,8 +27,8 @@ public class EmployeeService {
 	 * 
 	 * @return 従業員情報一覧
 	 */
-	public List<Employee> showList(String sort, String direction) {
-		List<Employee> employeeList = employeeRepository.findAll(sort, direction);
+	public List<Employee> showList() {
+		List<Employee> employeeList = employeeRepository.findAll();
 		return employeeList;
 	}
 
