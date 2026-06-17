@@ -52,4 +52,14 @@ public class EmployeeService {
 	public void update(Employee employee) {
 		employeeRepository.update(employee);
 	}
+
+	/**
+   * 従業員情報を削除します.
+   * 
+   * @param employee 削除した従業員情報
+   */
+  public void delete(Integer id) {
+    employeeRepository.delete(id);
+  }
+
 }
